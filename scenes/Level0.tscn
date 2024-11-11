@@ -1,0 +1,145 @@
+[gd_scene load_steps=7 format=3 uid="uid://1iypkcxgxv0c"]
+
+[ext_resource type="PackedScene" uid="uid://bin7drkvlq284" path="res://scenes/player_1.tscn" id="1_ghluv"]
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_j3acw"]
+[ext_resource type="PackedScene" uid="uid://dbse5xhv06hws" path="res://scenes/player_2.tscn" id="2_klkf3"]
+[ext_resource type="PackedScene" uid="uid://ymovnlfaqkyt" path="res://scenes/ball.tscn" id="3_nirlw"]
+[ext_resource type="Script" path="res://scenes/score_area.gd" id="5_dbk7t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ovd3"]
+size = Vector2(20, 648)
+
+[node name="Level0" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_j3acw")
+
+[node name="Player1" parent="." groups=["Paddles"] instance=ExtResource("1_ghluv")]
+process_mode = 1
+position = Vector2(32, 324)
+scale = Vector2(2, 4)
+
+[node name="Player2" parent="." instance=ExtResource("2_klkf3")]
+process_mode = 1
+position = Vector2(1120, 324)
+scale = Vector2(2, 4)
+
+[node name="Ball" parent="." instance=ExtResource("3_nirlw")]
+process_mode = 1
+position = Vector2(576, 324)
+
+[node name="Goal-L" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal-L"]
+position = Vector2(-10, 324)
+shape = SubResource("RectangleShape2D_5ovd3")
+
+[node name="Goal-R" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal-R"]
+position = Vector2(1162, 324)
+shape = SubResource("RectangleShape2D_5ovd3")
+
+[node name="ScoreArea" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("5_dbk7t")
+
+[node name="PinkScore" type="Label" parent="ScoreArea"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -79.5
+offset_right = 79.5
+offset_bottom = 42.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.987111, 0.322329, 0.611018, 1)
+theme_override_font_sizes/font_size = 30
+text = "Pink Score:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GreenScore" type="Label" parent="ScoreArea"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -92.0
+offset_top = -42.0
+offset_right = 92.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(2.88785e-07, 0.736674, 0.200539, 1)
+theme_override_font_sizes/font_size = 30
+text = "Green Score:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BasicUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 576.0
+offset_top = 328.0
+offset_right = 576.0
+offset_bottom = 328.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+size_flags_horizontal = 4
+
+[node name="Play" type="Button" parent="BasicUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.5
+offset_top = -62.5
+offset_right = 20.5
+offset_bottom = -31.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play"
+
+[node name="Restart" type="Button" parent="BasicUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.5
+offset_top = -23.5
+offset_right = 32.5
+offset_bottom = 7.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Restart"
+
+[node name="Quit" type="Button" parent="BasicUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = 17.0
+offset_right = 21.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quit"
+
+[connection signal="body_entered" from="Goal-L" to="." method="_on_goal_l_body_entered"]
+[connection signal="body_entered" from="Goal-R" to="." method="_on_goal_r_body_entered"]
+[connection signal="pressed" from="BasicUI/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="BasicUI/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="BasicUI/Quit" to="." method="_on_quit_pressed"]
