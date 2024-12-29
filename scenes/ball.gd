@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var screen_size: Vector2
 var ball_size: float = 32
-var ball_speed = Vector2(250,250) # Initial speed and direction
+var ball_speed = Vector2(300,300) # Initial speed and direction
 var starting_position: Vector2
 @onready var level_0: Node2D = $".."
 @onready var goal_timer: Timer = $GoalTimer
